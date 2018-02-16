@@ -1,0 +1,23 @@
+{
+    "name": "intenta",
+    "version": "1.0.0",
+    "description": "Dead simple async retry with exponential backoff",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/revington/intenta.git"
+    },
+    "keywords": [],
+    "author": "Pedro Narciso García Revington <p.revington@gmail.com>",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/revington/intenta/issues"
+    },
+    "homepage": "https://github.com/revington/intenta#readme"
+}
