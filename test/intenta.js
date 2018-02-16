@@ -44,6 +44,7 @@ describe('#intenta(fn, options)', function () {
                 t[i] -= delta;
             }
         }
+        t[0] = 0;  // CI is slow as hell
         assert.deepEqual(t, expected);
     });
     describe('option.report', function () {
