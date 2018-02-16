@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/revington/intenta.svg?branch=master)](https://travis-ci.org/revington/intenta)
 [![Coverage Status](https://coveralls.io/repos/github/revington/intenta/badge.svg?branch=master)](https://coveralls.io/github/revington/intenta?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/github/revington/intenta/badge.svg?targetFile=package.json)](https://snyk.io/test/github/revington/intenta?targetFile=package.json)
 # intenta
 
 `#intenta(fn, options)`
