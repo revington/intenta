@@ -14,7 +14,7 @@
         "type": "git",
         "url": "git+https://github.com/revington/intenta.git"
     },
-    "keywords": [],
+    "keywords": ["retry", "async retry"],
     "author": "Pedro Narciso García Revington <p.revington@gmail.com>",
     "license": "GPL-3.0",
     "bugs": {
