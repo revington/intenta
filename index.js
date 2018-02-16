@@ -15,7 +15,6 @@ function intenta(fn, options) {
     var attempt = 0,
         args,
         callback;
-
     options = Object.assign({}, defaults, options);
 
     function cb(err) {
@@ -23,7 +22,7 @@ function intenta(fn, options) {
             return callback(err);
         }
         if (err) {
-            return setTimeout(req, backoff(attempt));
+            return setTimeout(req, options.backoff(attempt));
         }
         if (!options.report) {
             return callback.apply(null, arguments);
