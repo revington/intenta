@@ -28,24 +28,13 @@ describe('#intenta(fn, options)', function () {
         assert.deepEqual(doneArgs[0].message, 'Err5');
     });
     it('should backoff before retry', function () {
-        var expected = [0, 100, 200, 400, 800];
-        let times = attemptList.map(function (x) {
-            return x[1] - startTime;
-        });
-        let t = [times[0]];
-        for (let i = 1; i < times.length; i++) {
-            t[i] = times[i] - times[i - 1];
-            let expctd = expected[i];
-            let delta = t[i] % expctd;
-            // 15? totally arbirtrary number, but on your local computer should
-            // not take that longer to process. The important thing here is that the 
-            // delta is not similar or higher than the #backoff ms param
-            if (delta < 15) {
-                t[i] -= delta;
-            }
+        var times = [0];
+        var previousTookLess = true;
+        for (let i = 1; i < attemptList.length; i++) {
+            times[i] = attemptList[i][1] - attemptList[i - 1][1];
+            previousTookLess = previousTookLess && (times[i] > times[i - 1]);
         }
-        t[0] = 0;  // CI is slow as hell
-        assert.deepEqual(t, expected);
+        assert(previousTookLess, times);
     });
     describe('option.report', function () {
         function test(report, callback) {
