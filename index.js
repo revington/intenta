@@ -18,11 +18,18 @@ function intenta(fn, options) {
     options = Object.assign({}, defaults, options);
 
     function cb(err) {
+        var backoffMS;
         if (err && attempt === options.limit) {
+            if (options.report) {
+                return callback(err, attempt);
+            }
             return callback(err);
         }
         if (err) {
-            return setTimeout(req, options.backoff(attempt));
+            backoffMS = options.backoff(attempt, err);
+        }
+        if (err && backoffMS > -1) {
+            return setTimeout(req, backoffMS);
         }
         if (!options.report) {
             return callback.apply(null, arguments);

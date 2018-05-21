@@ -71,4 +71,62 @@ describe('#intenta(fn, options)', function () {
             });
         });
     });
+    describe('`attempt` is consecutive and starts at 1', function () {
+        var attemptList = [];
+        var totalMadeAttempts;
+        before(function (done) {
+            function willFail(callback) {
+                return callback(new Error('something'));
+            }
+
+            function backoff(attempt) {
+                attemptList.push(attempt);
+                return 1;
+            }
+            let fn = retry(willFail, {
+                backoff,
+                report: true
+            });
+            fn(function callback(err, _totalMadeAttempts) {
+                totalMadeAttempts = _totalMadeAttempts;
+                return done();
+            });
+        });
+        it('should be consecutive', function () {
+            assert.deepEqual([1, 2, 3, 4], attemptList);
+        });
+        it('should start at 1', function () {
+            assert.deepEqual(attemptList[0], 1);
+        });
+        it('reported attempts should be 1+ greater than the last received attempt argument ', function () {
+            assert.deepEqual(totalMadeAttempts, attemptList[attemptList.length-1] + 1);
+        });
+    });
+    describe('When backoff function returns -1', function () {
+        var tries = 0;
+        var error;
+        before(function (done) {
+            function willFail(callback) {
+                tries++;
+                return callback(new Error('something'));
+            }
+
+            function backoff() {
+                return -1;
+            }
+            let fn = retry(willFail, {
+                backoff
+            });
+            fn(function callback(err) {
+                error = err;
+                return done();
+            });
+        });
+        it('should not retry', function () {
+            assert.deepEqual(tries, 1);
+        });
+        it('backoff function should receive the error', function () {
+            assert.deepEqual(error.message, 'something');
+        });
+    });
 });

@@ -27,7 +27,7 @@ retryUpdateDB(id, data, function(err, result){
 You can pass some options to `intenta`
 * `limit`(Number) number of attempts to be made
 * `report` (Bool) On success append the number of attempts made to callback arguments
-* `backoff` (Function) A custom backoff function with the signature `fn(attempt)` where `attempt` is an integer > 0. It should return the number of miliseconds to backoff
+* `backoff` (Function) A custom backoff function with the signature `fn(attempt, error)` where `attempt` is an integer > 0. It should return the number of miliseconds to backoff. You can cancel retrying by returning -1. This allows you to stop retrying early i.e does not make any sense to retry after a 404 error.
 
 ### report = true example
 
